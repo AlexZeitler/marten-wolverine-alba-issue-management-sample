@@ -1,4 +1,4 @@
-namespace AspNetCoreMvcHtmx.Controllers;
+namespace IssueManagement.Controllers;
 
 public static class Constants
 {

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using AspNetCoreMvcHtmx.Models;
+using IssueManagement.Models;
 
-namespace AspNetCoreMvcHtmx.Controllers;
+namespace IssueManagement.Controllers;
 
 public class HomeController : Controller
 {

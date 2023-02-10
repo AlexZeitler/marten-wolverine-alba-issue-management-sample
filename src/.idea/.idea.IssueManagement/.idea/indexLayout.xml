@@ -2,7 +2,8 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders>
-      <Path>../../AspNetCoreMvcHtmxTemplate</Path>
+      <Path>../../IssueManagementTemplate</Path>
+      <Path>../../marten-wolverine-alba-issue-management-sample</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />
