@@ -1,0 +1,86 @@
+@using Htmx
+@using IssueManagement.Features.CreateIssue
+@model IssueManagement.Features.CreateIssue.FragmentModel
+
+@{
+  ViewBag.Title = "title";
+  Layout = Context.Request.IsHtmx() ? null : "_Layout";
+}
+
+@{
+  async Task RenderIssue(
+    IssueModel issue)
+  {
+    <div>Issue Created: @issue.Title</div>
+  }
+}
+
+@{
+  async Task RenderForm(
+    CreateIssueForm form)
+  {
+    <div class="mt-10 sm:mt-0" id="target">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Report issue</h3>
+          <p class="mt-1 text-sm text-gray-600">Provide as much details as possible.</p>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/2">
+        <div class="mt-5 md:col-span-2 md:mt-0">
+          <form hx-post="@Url.Action("CreateIssue")" hx-target="#target">
+            <input type="hidden"
+                   asp-for="@form.OriginatorId"
+                   value="@Guid.NewGuid()">
+            <div class="overflow-hidden shadow sm:rounded-md">
+              <div class="bg-white px-4 py-5 sm:p-6">
+                <div class="">
+                  <div class="col-span-6 sm:col-span-3">
+                    <label asp-for="@form.Title"
+                           class="block text-sm font-medium text-gray-700">
+                    </label>
+                    <input type="text"
+                           asp-for="@form.Title"
+                           class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label asp-for="@form.Description"
+                           class="block text-sm font-medium text-gray-700">
+                    </label>
+                    <textarea
+                           asp-for="@form.Description"
+                           class="form-textarea mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </textarea>
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <button type="submit"
+                        class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+}
+
+@{
+  switch (Model.FragmentId)
+  {
+    case "create-issue-form":
+      await RenderForm(Model as CreateIssueForm ?? throw new InvalidOperationException(nameof(RenderForm)));
+      break;
+
+    case "issue-model":
+      await RenderIssue(Model as IssueModel ?? throw new InvalidOperationException(nameof(RenderIssue)));
+      break;
+    default:
+      throw new ArgumentOutOfRangeException(nameof(Model.FragmentId));
+  }
+}
